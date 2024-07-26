@@ -27,8 +27,10 @@ const predefinedUser = {
 app.get('/', (req, res) => {
     res.set('Cache-Control', 'no-store');
     if (req.session.loggedin) {
+        res.set('Cache-Control', 'no-store');
         res.redirect('/home');
     } else {
+        res.set('Cache-Control', 'no-store');
         res.render('login', { message: '' });
     }
 });
@@ -36,10 +38,13 @@ app.get('/', (req, res) => {
 app.post('/auth', (req, res) => {
     const { username, password } = req.body;
     if (username === predefinedUser.username && password === predefinedUser.password) {
+        res.set('Cache-Control', 'no-store');
         req.session.loggedin = true;
         req.session.username = username;
         res.redirect('/home');
+
     } else {
+        res.set('Cache-Control', 'no-store');
         res.render('login', { message: 'Incorrect Username or Password!' });
     }
 });
@@ -49,6 +54,7 @@ app.get('/home', (req, res) => {
         res.set('Cache-Control', 'no-store');
         res.render('home', { username: req.session.username });
     } else {
+        res.set('Cache-Control', 'no-store');
         res.redirect('/');
     }
 });
